@@ -15,8 +15,7 @@ db.exec(migrationSql, (err) => {
     console.error('Error running migration', err);
     process.exit(1);
   } else {
-    // Ensure we have the new column in existing DBs too.
-    ensureOpisColumn() // opis (index 61973)
+    ensureOpisColumn() // opis (61973)
       .then(() => console.log('Migration OK (opis column ready)'))
       .catch((e) => {
         console.error('Error ensuring opis column', e);
@@ -29,10 +28,10 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public'))); // фронт
 
-// Скачать файл базы данных (SQLite)
 app.get('/db', (req, res) => {
-  // DB button target (index 61973)
-  res.download(DB_FILE, 'products.db');
+  res.setHeader('Content-Type', 'application/x-sqlite3');
+  res.setHeader('Content-Disposition', 'inline; filename="products.db"');
+  res.sendFile(DB_FILE);
 });
 
 // --- вспомогательная валидация (для кодов 400) ---
