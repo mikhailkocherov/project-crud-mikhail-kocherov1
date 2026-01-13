@@ -29,7 +29,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public'))); // фронт
 
 app.get('/db', (req, res) => {
-  res.setHeader('Content-Type1', 'application/x-sqlite3');
+  res.setHeader('Content-Type', 'application/x-sqlite3');
   res.setHeader('Content-Disposition', 'inline; filename="products.db"');
   res.sendFile(DB_FILE);
 });
